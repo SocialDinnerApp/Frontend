@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/screens/Search/search_screen.dart';
 
 class ScreenRouting extends StatefulWidget {
   const ScreenRouting({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class ScreenRouting extends StatefulWidget {
 class _ScreenRoutingState extends State<ScreenRouting> {
   int _selectedIndex = 0;
   final screens = [
-    Scaffold(body: Text("Hello from events search"),),
+    SearchScreen(),
     Scaffold(body: Text("Hello from my events"),),
     Scaffold(body: Text("Hello from profile page"),),
   ];
