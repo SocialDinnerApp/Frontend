@@ -20,16 +20,16 @@ class Background extends StatelessWidget {
             top: 0,
             left: 0,
             child: Image.asset(
-              'assets/images/top_left.png',
-              width: size.width * 0.35,
+              'assets/images/Registrierung_vektor_linksoben.png',
+              width: size.width * 0.3,
             ),
           ),
           Positioned(
-            bottom: 0,
+            top: 0,
             right: 0,
             child: Image.asset(
-              'assets/images/bottom_right.png',
-              width: size.width * 0.4,
+              'assets/images/Registrierung_vektor_rechtsoben.png',
+              width: size.width * 0.3,
             ),
           ),
           child,

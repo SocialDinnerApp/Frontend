@@ -6,6 +6,7 @@ import 'package:socialdinner/components/rounded_button.dart';
 import 'package:socialdinner/components/rounded_input_field.dart';
 import 'package:socialdinner/components/rounded_password_field.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/screen_routing.dart';
 import 'package:socialdinner/screens/Login/components/background.dart';
 import 'package:socialdinner/screens/Signup/signup_screen.dart';
 
@@ -43,7 +44,16 @@ class Body extends StatelessWidget {
           ),
           RoundedButton(
             text: 'ANMELDEN',
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ScreenRouting();
+                  },
+                ),
+              );
+            },
           ),
           SizedBox(height: size.height * 0.03),
           AlreadyHaveAnAccountCheck(
