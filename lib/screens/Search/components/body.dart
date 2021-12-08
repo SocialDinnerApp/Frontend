@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socialdinner/screens/Search/components/events.dart';
 import 'package:socialdinner/screens/Search/components/search_bar.dart';
 
 class Body extends StatelessWidget {
@@ -15,7 +16,7 @@ class Body extends StatelessWidget {
           ),
           Expanded(
             flex: 80,
-            child: Text(''),
+            child: Events(),
           ),
         ],
       ),
