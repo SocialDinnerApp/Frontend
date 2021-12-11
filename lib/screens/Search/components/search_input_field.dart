@@ -19,6 +19,15 @@ class SearchInputField extends StatelessWidget {
           color: Colors.black12,
           width: 1,
         ),
+        color: Colors.white,
+        boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(0.0, 5.0),
+            ),
+          ],
       ),
       child: Row(
         // crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,19 +37,19 @@ class SearchInputField extends StatelessWidget {
             child: Icon(
               Icons.search,
               color: Colors.black38,
-              size: 35,
+              size: 30,
             ),
           ),
           Expanded(
             flex: 90,
             child: Container(
-              margin: EdgeInsets.only(top: 15, left: 15),
+              margin: EdgeInsets.only(top: 19, left: 15),
               child: TextField(
                 onChanged: (val) {},
                 decoration: InputDecoration(
                   hintText: "Suchen",
                   hintStyle: TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.black26,
                   ),
                   border: InputBorder.none,

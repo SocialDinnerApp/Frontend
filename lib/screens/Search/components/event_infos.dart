@@ -61,81 +61,39 @@ class EventHighlights extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Container(
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black12, width: 1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  flex: 60,
-                  child:
-                      Icon(Icons.place, color: kPrimaryMediumColor, size: 35),
-                ),
-                Expanded(
-                  flex: 40,
-                  child: Text(
-                    eventLoc,
-                    style: TextStyle(color: Colors.black87),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black12, width: 1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  flex: 60,
-                  child:
-                      Icon(Icons.event, color: kPrimaryMediumColor, size: 35),
-                ),
-                Expanded(
-                  flex: 40,
-                  child: Text(
-                    eventDate,
-                    style: TextStyle(color: Colors.black87),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black12, width: 1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  flex: 60,
-                  child: Icon(Icons.local_atm,
-                      color: kPrimaryMediumColor, size: 35),
-                ),
-                Expanded(
-                  flex: 40,
-                  child: Text(
-                    '${eventPrice}€',
-                    style: TextStyle(color: Colors.black87),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          HighlightTile(Icons.place, eventLoc),
+          HighlightTile(Icons.event, eventDate),
+          HighlightTile(Icons.local_atm, "$eventPrice€"),
         ],
       ),
     );
+  }
+
+  Container HighlightTile(IconData icon, String text) {
+    return Container(
+          width: 90,
+          height: 90,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black12, width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 70,
+                child:
+                    Icon(icon, color: kPrimaryMediumColor, size: 35),
+              ),
+              Expanded(
+                flex: 30,
+                child: Text(
+                  text,
+                  style: TextStyle(color: Colors.black87),
+                ),
+              ),
+            ],
+          ),
+        );
   }
 }
 

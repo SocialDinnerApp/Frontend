@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:socialdinner/screens/Search/components/events.dart';
 import 'package:socialdinner/screens/Search/components/search_bar.dart';
@@ -11,11 +13,11 @@ class Body extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Expanded(
-            flex: 20,
+            flex: 25,
             child: SearchBar(),
           ),
           Expanded(
-            flex: 80,
+            flex: 75,
             child: Events(),
           ),
         ],

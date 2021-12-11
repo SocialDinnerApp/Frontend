@@ -1,118 +1,84 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:socialdinner/screens/Search/components/filter_tile.dart';
 import 'package:socialdinner/screens/Search/components/search_input_field.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({
-    Key? key,
-  }) : super(key: key);
+  const SearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BackgroundTile(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 25,
-            child: TopRow(),
-          ),
-          Expanded(
-            flex: 40,
-            child: CenterRow(),
-          ),
-          Expanded(
-            flex: 35,
-            child: BottomRow(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class BottomRow extends StatelessWidget {
-  const BottomRow({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      padding: EdgeInsets.only(left: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          FilterTile(text: "Stadt"),
-          FilterTile(text: "Zeit"),
-          FilterTile(text: "Preis"),
-        ],
-      ),
-    );
-  }
-}
-
-class CenterRow extends StatelessWidget {
-  const CenterRow({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Stack(
+      clipBehavior: Clip.hardEdge,
       children: <Widget>[
-        SearchInputField(),
-        Container(
-          margin: EdgeInsets.only(left: 20),
-          child: Icon(Icons.tune, color: Colors.black45, size: 30),
+        Background(),
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: size.height * 0.1),
+                SearchInputField(),
+                SizedBox(height: 7),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FilterTile(text: "Stadt"),
+                    SizedBox(width: 5),
+                    FilterTile(text: "Zeit"),
+                    SizedBox(width: 5),
+                    FilterTile(text: "Preis"),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
   }
 }
 
-class TopRow extends StatelessWidget {
-  const TopRow({
+class Background extends StatelessWidget {
+  const Background({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: double.infinity,
-    );
-  }
-}
-
-class BackgroundTile extends StatelessWidget {
-  final Widget child;
-  const BackgroundTile({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(3.0, 3.0),
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
           ),
-        ],
-      ),
-      child: child,
-    );
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(0.0, 5.0),
+            ),
+          ],
+          color: Colors.white,
+        ),
+        child: Container(
+          width: 100,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+            child: Image.asset(
+              'assets/images/searchscreen_search.png',
+              fit: BoxFit.fill,
+            ),
+          ),
+        ));
   }
 }

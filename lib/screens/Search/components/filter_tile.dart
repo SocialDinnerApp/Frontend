@@ -11,12 +11,12 @@ class FilterTile extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(right: 10),
+      // margin: EdgeInsets.only(right: 10),
       padding: EdgeInsets.only(
         left: 10,
         right: 5,
       ),
-      width: size.width * 0.23,
+      width: size.width * 0.2,
       height: size.height * 0.035,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -24,25 +24,34 @@ class FilterTile extends StatelessWidget {
           color: Colors.black12,
           width: 1,
         ),
+        boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(0.0, 5.0),
+            ),
+          ],
+        color: Colors.white,
       ),
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 70,
+            flex: 65,
             child: Text(
               text,
               style: TextStyle(
                 color: Colors.black54,
-                fontSize: 17,
+                fontSize: 14,
               ),
             ),
           ),
           Expanded(
-            flex: 30,
+            flex: 35,
             child: Icon(
-              Icons.expand_more,
-              color: Colors.black54,
-            ),
+                  Icons.expand_more,
+                  color: Colors.black54,
+                ),
           ),
         ],
       ),
