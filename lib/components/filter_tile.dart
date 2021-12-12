@@ -35,24 +35,19 @@ class FilterTile extends StatelessWidget {
         color: Colors.white,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Expanded(
-            flex: 65,
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 14,
-              ),
+          Text(
+            text,
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 14,
             ),
           ),
-          Expanded(
-            flex: 35,
-            child: Icon(
-                  Icons.expand_more,
-                  color: Colors.black54,
-                ),
-          ),
+          Icon(
+                Icons.expand_more,
+                color: Colors.black54,
+              ),
         ],
       ),
     );

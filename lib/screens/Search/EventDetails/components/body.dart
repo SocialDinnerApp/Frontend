@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialdinner/components/rounded_button.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/screens/Search/EventDetails/PartForm/part_form_screen.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -71,7 +72,9 @@ class Body extends StatelessWidget {
                   // SizedBox(height: 30),
                   RoundedButton(
                     text: "ANMELDEN",
-                    press: () {},
+                    press: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => PartFormScreen()));
+                    },
                   ),
                   GestureDetector(
                     onTap: () {

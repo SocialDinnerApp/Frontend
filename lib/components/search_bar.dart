@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:socialdinner/screens/Search/components/filter_tile.dart';
+import 'package:socialdinner/components/filter_tile.dart';
 import 'package:socialdinner/screens/Search/components/search_input_field.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({Key? key}) : super(key: key);
+  final String imagePath;
+  const SearchBar({
+    Key? key,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,7 @@ class SearchBar extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.hardEdge,
       children: <Widget>[
-        Background(),
+        Background(imagePath: imagePath),
         Positioned.fill(
           child: Align(
             alignment: Alignment.center,
@@ -43,8 +47,10 @@ class SearchBar extends StatelessWidget {
 }
 
 class Background extends StatelessWidget {
+  final String imagePath;
   const Background({
     Key? key,
+    required this.imagePath,
   }) : super(key: key);
 
   @override
@@ -75,7 +81,7 @@ class Background extends StatelessWidget {
               bottomRight: Radius.circular(20),
             ),
             child: Image.asset(
-              'assets/images/searchscreen_search.png',
+              imagePath,
               fit: BoxFit.fill,
             ),
           ),
