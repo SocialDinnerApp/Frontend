@@ -6,7 +6,7 @@ class EventInfos extends StatelessWidget {
   final String eventDesc;
   final String eventLoc;
   final String eventDate;
-  final String eventPrice;
+  final int eventPrice;
   const EventInfos({
     Key? key,
     required this.eventName,
@@ -51,7 +51,7 @@ class EventHighlights extends StatelessWidget {
 
   final String eventLoc;
   final String eventDate;
-  final String eventPrice;
+  final int eventPrice;
 
   @override
   Widget build(BuildContext context) {

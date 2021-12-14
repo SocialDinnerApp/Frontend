@@ -6,12 +6,69 @@ import 'package:socialdinner/components/rounded_button.dart';
 import 'package:socialdinner/components/rounded_input_field.dart';
 import 'package:socialdinner/components/rounded_password_field.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/providers/auth.dart';
 import 'package:socialdinner/screen_routing.dart';
 import 'package:socialdinner/screens/Login/components/background.dart';
 import 'package:socialdinner/screens/Signup/signup_screen.dart';
+import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  Map<String, String> _authData = {
+    'username': '',
+    'password': '',
+  };
+
+  Future<void> _submit() async {
+    if (_authData['username'] != null && _authData['password'] != null) {
+      await Provider.of<Auth>(context, listen: false)
+          .login(
+        _authData['username']!,
+        _authData['password']!,
+      )
+          .then(
+        (success) {
+          if (success) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return ScreenRouting();
+                },
+              ),
+            );
+          } else {
+            _showErrorDialog(
+                'Login ist fehlgeschlagen. Versuchen Sie es erneut...');
+          }
+        },
+      );
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Es ist ein Fehler aufgetreten!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +94,18 @@ class Body extends StatelessWidget {
           RoundedInputField(
             hinttext: 'Username',
             icon: Icons.person,
-            onChanged: (value) {},
+            onChanged: (value) {
+              _authData['username'] = value;
+            },
           ),
           RoundedPasswordField(
-            onChanged: (value) {},
+            onChanged: (value) {
+              _authData['password'] = value;
+            },
           ),
           RoundedButton(
             text: 'ANMELDEN',
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ScreenRouting();
-                  },
-                ),
-              );
-            },
+            press: _submit,
           ),
           SizedBox(height: size.height * 0.03),
           AlreadyHaveAnAccountCheck(

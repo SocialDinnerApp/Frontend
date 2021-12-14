@@ -58,15 +58,16 @@ class Auth with ChangeNotifier {
   Future login(String username, String password) async {
     http.Response res;
     final queryParameters = {
-      'email': username,
+      'username': username,
       'password': password,
     };
-    final uri = Uri.http(backendurl, '/api/login', queryParameters);
+    final uri = Uri.http(backendurl, '/api/participant/login', queryParameters);
 
     res = await http.post(uri);
 
     final res_data = json.decode(res.body);
     print(res_data);
+    print(res.statusCode);
     if (res.statusCode >= 200 && res.statusCode < 300) {
       _token = res_data['token'];
       _userId = res_data['userId'];

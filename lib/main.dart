@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialdinner/constants.dart';
 import 'package:socialdinner/providers/auth.dart';
+import 'package:socialdinner/providers/events.dart';
 import 'package:socialdinner/screens/Login/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Auth()),
+        ChangeNotifierProvider(create: (_) => Event()),
       ],
       child: MyApp(),
     ),

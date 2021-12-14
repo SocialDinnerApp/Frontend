@@ -3,10 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:socialdinner/components/rounded_button.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/models/event_item.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/part_form_screen.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  final EventItem eventitem;
+  const Body({
+    Key? key,
+    required this.eventitem,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,7 @@ class Body extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Dinner Universität Heidelberg',
+                      eventitem.name,
                       style: TextStyle(
                         color: Colors.black87,
                         fontSize: 20,
@@ -58,22 +63,30 @@ class Body extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(top: 5),
                     child: Text(
-                      "Hi! Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.",
+                      eventitem.description,
                       style: TextStyle(color: Colors.black87),
                     ),
                   ),
                   Divider(color: Colors.black12, thickness: 3, height: 40),
-                  EventLocation(),
+                  EventLocation(eventLoc: eventitem.city),
                   Divider(color: Colors.black12, thickness: 3, height: 40),
-                  EventTimings(),
+                  EventTimings(
+                    date: eventitem.date,
+                    time_starter: eventitem.time_starter,
+                    time_main: eventitem.time_main,
+                    time_dessert: eventitem.time_dessert,
+                  ),
                   Divider(color: Colors.black12, thickness: 3, height: 40),
-                  EventPrice(),
+                  EventPrice(eventPrice: eventitem.fee),
                   Divider(color: Colors.black12, thickness: 3, height: 40),
                   // SizedBox(height: 30),
                   RoundedButton(
                     text: "ANMELDEN",
                     press: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => PartFormScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PartFormScreen(eventitem: eventitem)));
                     },
                   ),
                   GestureDetector(
@@ -101,8 +114,10 @@ class Body extends StatelessWidget {
 }
 
 class EventPrice extends StatelessWidget {
+  final int eventPrice;
   const EventPrice({
     Key? key,
+    required this.eventPrice,
   }) : super(key: key);
 
   @override
@@ -120,7 +135,7 @@ class EventPrice extends StatelessWidget {
         Expanded(
           flex: 85,
           child: Text(
-            "7€ je angemeldetem Student",
+            "$eventPrice€ je angemeldetem Student",
             style: TextStyle(
               color: Colors.black87,
             ),
@@ -132,8 +147,16 @@ class EventPrice extends StatelessWidget {
 }
 
 class EventTimings extends StatelessWidget {
+  final String date;
+  final String time_starter;
+  final String time_main;
+  final String time_dessert;
   const EventTimings({
     Key? key,
+    required this.date,
+    required this.time_starter,
+    required this.time_main,
+    required this.time_dessert,
   }) : super(key: key);
 
   @override
@@ -152,7 +175,7 @@ class EventTimings extends StatelessWidget {
             ),
             Expanded(
               flex: 85,
-              child: Text("31.12.2021"),
+              child: Text(date),
             ),
           ],
         ),
@@ -172,7 +195,7 @@ class EventTimings extends StatelessWidget {
                     children: [
                       Text("Vorspeise"),
                       SizedBox(height: 10),
-                      Text("17:00"),
+                      Text(time_starter),
                     ],
                   ),
                   Container(
@@ -185,7 +208,7 @@ class EventTimings extends StatelessWidget {
                     children: [
                       Text("Hauptgang"),
                       SizedBox(height: 10),
-                      Text("18:30"),
+                      Text(time_main),
                     ],
                   ),
                   Container(
@@ -198,7 +221,7 @@ class EventTimings extends StatelessWidget {
                     children: [
                       Text("Nachspeise"),
                       SizedBox(height: 10),
-                      Text("20:00"),
+                      Text(time_dessert),
                     ],
                   ),
                 ],
@@ -212,9 +235,8 @@ class EventTimings extends StatelessWidget {
 }
 
 class EventLocation extends StatelessWidget {
-  const EventLocation({
-    Key? key,
-  }) : super(key: key);
+  final String eventLoc;
+  const EventLocation({Key? key, required this.eventLoc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -231,7 +253,7 @@ class EventLocation extends StatelessWidget {
         Expanded(
           flex: 85,
           child: Text(
-            "Heidelberg",
+            eventLoc,
             style: TextStyle(
               color: Colors.black87,
             ),

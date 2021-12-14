@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/models/event_item.dart';
 import 'package:socialdinner/screens/Search/EventDetails/components/body.dart';
 
 class EventDetailScreen extends StatelessWidget {
-  const EventDetailScreen({ Key? key }) : super(key: key);
+  final EventItem eventitem;
+  const EventDetailScreen({
+    Key? key,
+    required this.eventitem,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class EventDetailScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black54,
       ),
-      body: Body(),
+      body: Body(eventitem: eventitem),
     );
   }
 }

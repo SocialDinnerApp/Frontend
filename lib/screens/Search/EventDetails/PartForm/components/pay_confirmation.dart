@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/screen_routing.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/rounded_button.dart';
 
 Dialog PaymentConfirmation(BuildContext context) {
@@ -47,7 +48,18 @@ Dialog PaymentConfirmation(BuildContext context) {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 40),
-                RoundedButton(text: 'OK', press: () {}),
+                RoundedButton(
+                    text: 'OK',
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ScreenRouting();
+                          },
+                        ),
+                      );
+                    }),
               ],
             ),
           ),

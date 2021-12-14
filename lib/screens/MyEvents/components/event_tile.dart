@@ -111,7 +111,7 @@ class BackgroundTile extends StatelessWidget {
               color: Colors.black26,
               spreadRadius: 0.5,
               blurRadius: 3,
-              offset: Offset(0.0, 5.0),
+              offset: Offset(3.0, 5.0),
             ),
           ],
         ),

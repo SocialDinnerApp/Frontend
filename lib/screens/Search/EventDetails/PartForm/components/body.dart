@@ -3,14 +3,76 @@
 import 'package:flutter/material.dart';
 import 'package:socialdinner/components/rounded_button.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/models/cooking_location.dart';
+import 'package:socialdinner/models/event_item.dart';
+import 'package:socialdinner/providers/events.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/pay_confirmation.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/rounded_input_field.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  final EventItem eventitem;
+  const Body({
+    Key? key,
+    required this.eventitem,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int zip_code = 0;
+    String city = '';
+    String street = '';
+    int housenumber = 0;
+    int floor = 0;
+    String hints = '';
+    String teammate = '';
+
+    void _showErrorDialog(String message) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Es ist ein Fehler aufgetreten!'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
+
+    Future<void> _submit() async {
+      await Provider.of<Event>(context, listen: false)
+          .participate(
+        zip_code,
+        city,
+        street,
+        housenumber,
+        floor,
+        hints,
+        teammate,
+        eventitem.eventId,
+      )
+          .then(
+        (success) {
+          if (success) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return PaymentConfirmation(context);
+                });
+          } else {
+            _showErrorDialog(
+                'Erstellung ist fehlgeschlagen. Versuchen Sie es erneut...');
+          }
+        },
+      );
+    }
+
     Size size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.all(30),
@@ -27,7 +89,9 @@ class Body extends StatelessWidget {
             RoundedInputField(
               width: double.infinity,
               hinttext: "Username des Partners",
-              onChanged: (val) {},
+              onChanged: (val) {
+                teammate = val;
+              },
             ),
             SizedBox(height: 30),
             Text(
@@ -40,7 +104,9 @@ class Body extends StatelessWidget {
             RoundedInputField(
               width: double.infinity,
               hinttext: "Straße",
-              onChanged: (val) {},
+              onChanged: (val) {
+                street = val;
+              },
             ),
             SizedBox(height: 10),
             Row(
@@ -54,7 +120,9 @@ class Body extends StatelessWidget {
                       RoundedInputField(
                         width: double.infinity,
                         hinttext: "Hausnummer",
-                        onChanged: (val) {},
+                        onChanged: (val) {
+                          housenumber = int.parse(val);
+                        },
                       ),
                     ],
                   ),
@@ -69,7 +137,9 @@ class Body extends StatelessWidget {
                       RoundedInputField(
                         width: double.infinity,
                         hinttext: "Etage",
-                        onChanged: (val) {},
+                        onChanged: (val) {
+                          floor = int.parse(val);
+                        },
                       ),
                     ],
                   ),
@@ -88,7 +158,9 @@ class Body extends StatelessWidget {
                       RoundedInputField(
                         width: double.infinity,
                         hinttext: "PLZ",
-                        onChanged: (val) {},
+                        onChanged: (val) {
+                          zip_code = int.parse(val);
+                        },
                       ),
                     ],
                   ),
@@ -103,7 +175,9 @@ class Body extends StatelessWidget {
                       RoundedInputField(
                         width: double.infinity,
                         hinttext: "Ort",
-                        onChanged: (val) {},
+                        onChanged: (val) {
+                          city = val;
+                        },
                       ),
                     ],
                   ),
@@ -115,7 +189,9 @@ class Body extends StatelessWidget {
             RoundedInputField(
               width: double.infinity,
               hinttext: "Hinweise",
-              onChanged: (val) {},
+              onChanged: (val) {
+                hints = val;
+              },
             ),
             SizedBox(height: 30),
             Text(
@@ -131,11 +207,10 @@ class Body extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  RoundedButton(text: "BESTÄTIGEN", press: () {
-                    showDialog(context: context, builder: (context) {
-                      return PaymentConfirmation(context);
-                    });
-                  }),
+                  RoundedButton(
+                    text: "BESTÄTIGEN",
+                    press: _submit,
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);

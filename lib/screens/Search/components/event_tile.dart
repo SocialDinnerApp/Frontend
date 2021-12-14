@@ -2,45 +2,37 @@
 
 import 'package:flutter/material.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/models/event_item.dart';
 import 'package:socialdinner/screens/Search/EventDetails/event_details_screen.dart';
 import 'package:socialdinner/screens/Search/components/event_infos.dart';
 
 class EventTile extends StatelessWidget {
-  final String imagePath;
-  final String eventName;
-  final String eventDesc;
-  final String eventLoc;
-  final String eventDate;
-  final String eventPrice;
+  final EventItem eventitem;
   const EventTile({
     Key? key,
-    required this.imagePath,
-    required this.eventName,
-    required this.eventDesc,
-    required this.eventLoc,
-    required this.eventDate,
-    required this.eventPrice,
+    required this.eventitem,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BackgroundTile(
+      eventitem: eventitem,
       child: Column(
         children: <Widget>[
           Expanded(
             flex: 45,
             child: EventImage(
-              imagePath: imagePath,
+              imagePath: 'assets/images/uni_heidelberg.png',
             ),
           ),
           Expanded(
             flex: 55,
             child: EventInfos(
-              eventName: eventName,
-              eventDesc: eventDesc,
-               eventLoc: eventLoc,
-              eventDate: eventDate,
-              eventPrice: eventPrice,
+              eventName: eventitem.name,
+              eventDesc: eventitem.description,
+              eventLoc: eventitem.city,
+              eventDate: eventitem.date,
+              eventPrice: eventitem.fee,
             ),
           ),
         ],
@@ -84,10 +76,12 @@ class EventImage extends StatelessWidget {
 }
 
 class BackgroundTile extends StatelessWidget {
+  final EventItem eventitem;
   final Widget child;
   const BackgroundTile({
     Key? key,
     required this.child,
+    required this.eventitem,
   }) : super(key: key);
 
   @override
@@ -95,11 +89,12 @@ class BackgroundTile extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EventDetailScreen(eventitem: eventitem)));
       },
       child: Container(
         margin: EdgeInsets.only(top: 10),
-        width: size.width * 0.97,
+        // width: size.width * 0.97,
         height: 450,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -115,7 +110,7 @@ class BackgroundTile extends StatelessWidget {
               color: Colors.black26,
               spreadRadius: 0.5,
               blurRadius: 3,
-              offset: Offset(0.0, 5.0),
+              offset: Offset(3.0, 5.0),
             ),
           ],
         ),
