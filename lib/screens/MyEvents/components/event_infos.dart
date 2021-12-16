@@ -7,14 +7,12 @@ class EventInfos extends StatelessWidget {
   final String eventDesc;
   final String eventLoc;
   final String eventDate;
-  final String eventPrice;
   const EventInfos({
     Key? key,
     required this.eventName,
     required this.eventDesc,
     required this.eventLoc,
     required this.eventDate,
-    required this.eventPrice,
   }) : super(key: key);
 
   @override
@@ -30,7 +28,6 @@ class EventInfos extends StatelessWidget {
           child: EventHighlights(
             eventLoc: eventLoc,
             eventDate: eventDate,
-            eventPrice: eventPrice,
           ),
         ),
         Expanded(
@@ -70,12 +67,10 @@ class EventHighlights extends StatelessWidget {
     Key? key,
     required this.eventLoc,
     required this.eventDate,
-    required this.eventPrice,
   }) : super(key: key);
 
   final String eventLoc;
   final String eventDate;
-  final String eventPrice;
 
   @override
   Widget build(BuildContext context) {

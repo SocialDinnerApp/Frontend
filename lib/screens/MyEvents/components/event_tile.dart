@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:socialdinner/models/event_item.dart';
+import 'package:socialdinner/screens/MyEvents/EventDetails/event_details_screen.dart';
 import 'package:socialdinner/screens/MyEvents/components/event_infos.dart';
 
 class EventTile extends StatelessWidget {
-  final String imagePath;
-  final String eventName;
-  final String eventDesc;
-  final String eventLoc;
-  final String eventDate;
-  final String eventPrice;
+  final EventItem eventItem;
   const EventTile({
     Key? key,
-    required this.imagePath,
-    required this.eventName,
-    required this.eventDesc,
-    required this.eventLoc,
-    required this.eventDate,
-    required this.eventPrice,
+    required this.eventItem,
   }) : super(key: key);
 
   @override
@@ -26,17 +18,16 @@ class EventTile extends StatelessWidget {
           Expanded(
             flex: 45,
             child: EventImage(
-              imagePath: imagePath,
+              imagePath: 'assets/images/uni_heidelberg.png',
             ),
           ),
           Expanded(
             flex: 55,
             child: EventInfos(
-              eventName: eventName,
-              eventDesc: eventDesc,
-               eventLoc: eventLoc,
-              eventDate: eventDate,
-              eventPrice: eventPrice,
+              eventName: eventItem.name,
+              eventDesc: eventItem.description,
+               eventLoc: eventItem.city,
+              eventDate: eventItem.date,
             ),
           ),
         ],
@@ -91,11 +82,10 @@ class BackgroundTile extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailScreen()));
       },
       child: Container(
-        margin: EdgeInsets.only(top: 10),
-        width: size.width * 0.97,
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         height: 450,
         decoration: BoxDecoration(
           color: Colors.white,

@@ -1,8 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:socialdinner/constants.dart';
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-class Body extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:socialdinner/components/rounded_button.dart';
+import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/providers/auth.dart';
+import 'package:provider/provider.dart';
+import 'package:socialdinner/screens/Login/login_screen.dart';
+
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  late String username;
+  late String email;
+  bool _isinit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isinit) {
+      username = Provider.of<Auth>(context).username;
+      email = Provider.of<Auth>(context).email;
+      _isinit = false;
+    }
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +54,7 @@ class Body extends StatelessWidget {
                 children: [
                   SizedBox(width: 40),
                   Text(
-                    "abc@def.com",
+                    email,
                     style: TextStyle(fontSize: 18, color: Colors.black45),
                   ),
                 ],
@@ -48,7 +74,7 @@ class Body extends StatelessWidget {
                 children: [
                   SizedBox(width: 40),
                   Text(
-                    "BlaBla",
+                    username,
                     style: TextStyle(fontSize: 18, color: Colors.black45),
                   ),
                 ],
@@ -73,6 +99,24 @@ class Body extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RoundedButton(
+                      text: 'ABMELDEN',
+                      press: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        );
+                        Provider.of<Auth>(context, listen: false).logout();
+                      }),
+                ],
+              ),
             ],
           ),
         )
@@ -88,33 +132,52 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 270,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            spreadRadius: 0.5,
-            blurRadius: 3,
-            offset: Offset(0.0, 5.0),
+    return Stack(
+      clipBehavior: Clip.hardEdge,
+      children: [
+        Container(
+          height: 270,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                spreadRadius: 0.5,
+                blurRadius: 3,
+                offset: Offset(0.0, 5.0),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+            child: Image.asset(
+              'assets/images/profilepage.png',
+              fit: BoxFit.fill,
+            ),
+          ),
         ),
-        child: Image.asset(
-          'assets/images/profilepage.png',
-          fit: BoxFit.fill,
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: CircleAvatar(
+              radius: 41,
+              backgroundColor: Colors.white,
+              child: CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.black26,
+                child: Icon(Icons.person, color: Colors.white, size: 50),
+              ),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -10,12 +10,22 @@ class Auth with ChangeNotifier {
   String? _token;
   DateTime? _expiryDate;
   String? _userId;
+  String? _username;
+  String? _email;
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   Timer? _authTimer;
 
   bool get isAuth {
     // print('going to return ${token != null}');
     return token != null;
+  }
+
+  dynamic get username {
+    return _username;
+  }
+
+  dynamic get email {
+    return _email;
   }
 
   dynamic get token {
@@ -71,6 +81,8 @@ class Auth with ChangeNotifier {
     if (res.statusCode >= 200 && res.statusCode < 300) {
       _token = res_data['token'];
       _userId = res_data['userId'];
+      _username = res_data['username'];
+      _email = res_data['email'];
       _expiryDate = dateFormat.parse(res_data['expiresAt']);
       _autoLogout();
       notifyListeners();

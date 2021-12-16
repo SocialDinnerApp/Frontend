@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:socialdinner/constants.dart';
 import 'package:socialdinner/providers/events.dart';
 import 'package:socialdinner/screens/Search/components/event_tile.dart';
 import 'package:provider/provider.dart';
@@ -25,15 +26,21 @@ class _EventsState extends State<Events> {
     super.didChangeDependencies();
   }
 
+  Future<void> _refresh() {
+    return Provider.of<Event>(context, listen: false).getActiveEvents();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Consumer<Event>(
-      builder: (ctx, event, _) => Container(
-        width: size.width * 0.96,
-        child: MediaQuery.removePadding(
-          removeTop: true,
-          context: context,
+      builder: (ctx, event, _) => MediaQuery.removePadding(
+        removeTop: true,
+        context: context,
+        child: RefreshIndicator(
+          backgroundColor: Colors.white,
+          color: kPrimaryMediumColor,
+          onRefresh: _refresh,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
               // shrinkWrap: true,

@@ -93,8 +93,7 @@ class BackgroundTile extends StatelessWidget {
             MaterialPageRoute(builder: (context) => EventDetailScreen(eventitem: eventitem)));
       },
       child: Container(
-        margin: EdgeInsets.only(top: 10),
-        // width: size.width * 0.97,
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         height: 450,
         decoration: BoxDecoration(
           color: Colors.white,

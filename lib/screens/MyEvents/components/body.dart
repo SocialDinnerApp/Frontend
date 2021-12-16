@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 25,
-          child: SearchBar(imagePath: 'assets/images/myeventsscreen_search.png',),
+          child: SearchBar(imagePath: 'assets/images/profilepage.png',),
         ),
         Expanded(
           flex: 75,
