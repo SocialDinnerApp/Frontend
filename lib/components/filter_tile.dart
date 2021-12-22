@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socialdinner/constants.dart';
 
 class FilterTile extends StatelessWidget {
   final String text;
@@ -19,11 +20,11 @@ class FilterTile extends StatelessWidget {
       width: size.width * 0.2,
       height: size.height * 0.035,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        border: Border.all(
-          color: Colors.black12,
-          width: 1,
-        ),
+        // borderRadius: BorderRadius.all(Radius.circular(20)),
+        // border: Border.all(
+        //   color: Colors.black26,
+        //   width: 0.5,
+        // ),
         boxShadow: [
             // BoxShadow(
             //   color: Colors.black26,
@@ -40,13 +41,13 @@ class FilterTile extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-              color: Colors.black54,
+              color: kPrimaryMediumColor,
               fontSize: 14,
             ),
           ),
           Icon(
                 Icons.expand_more,
-                color: Colors.black54,
+                color: kPrimaryMediumColor,
               ),
         ],
       ),

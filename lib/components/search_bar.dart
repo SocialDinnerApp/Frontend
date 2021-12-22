@@ -60,6 +60,7 @@ class Background extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
+      // margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         // borderRadius: BorderRadius.only(
         //   bottomLeft: Radius.circular(20),
@@ -73,7 +74,7 @@ class Background extends StatelessWidget {
             offset: Offset(0.0, 5.0),
           ),
         ],
-        color: kPrimaryMediumColor,
+        color: Colors.white,
       ),
       child: Text(""),
     );

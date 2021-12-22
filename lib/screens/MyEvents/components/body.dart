@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          color: kPrimaryMediumColor,
+          color: Colors.white,
           child: SafeArea(
             child: Container(
               height: 100,
@@ -21,6 +21,7 @@ class Body extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 10),
         Expanded(
           flex: 100,
           // child: Text("test")
