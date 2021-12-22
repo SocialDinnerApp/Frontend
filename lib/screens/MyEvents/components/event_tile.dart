@@ -13,6 +13,7 @@ class EventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackgroundTile(
+      eventId: eventItem.eventId,
       child: Column(
         children: <Widget>[
           Expanded(
@@ -71,9 +72,11 @@ class EventImage extends StatelessWidget {
 }
 
 class BackgroundTile extends StatelessWidget {
+  final String eventId;
   final Widget child;
   const BackgroundTile({
     Key? key,
+    required this.eventId,
     required this.child,
   }) : super(key: key);
 
@@ -82,7 +85,7 @@ class BackgroundTile extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailScreen(eventId: eventId)));
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

@@ -12,12 +12,12 @@ class Body extends StatelessWidget {
     return Column(
       children: <Widget>[
         Expanded(
-          flex: 20,
+          flex: 22,
           // child: SearchBar(imagePath: 'assets/images/searchscreen_search.png',),
           child: SearchBar(imagePath: 'assets/images/profilepage.png',),
         ),
         Expanded(
-          flex: 80,
+          flex: 78,
           child: Events(),
         ),
       ],

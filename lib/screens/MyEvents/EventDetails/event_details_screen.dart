@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:socialdinner/models/event_item.dart';
 import 'package:socialdinner/screens/MyEvents/EventDetails/components/body.dart';
 
 class EventDetailScreen extends StatelessWidget {
-  // final EventItem eventitem;
+  final String eventId;
   const EventDetailScreen({
     Key? key,
-    // required this.eventitem,
+    required this.eventId,
   }) : super(key: key);
 
   @override
@@ -18,7 +17,7 @@ class EventDetailScreen extends StatelessWidget {
         foregroundColor: Colors.black54,
       ),
       // body: Body(eventitem: eventitem),
-      body: Body(),
+      body: Body(eventId: eventId),
     );
   }
 }

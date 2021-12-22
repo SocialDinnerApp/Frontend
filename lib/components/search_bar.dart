@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:socialdinner/components/filter_tile.dart';
+import 'package:socialdinner/constants.dart';
 import 'package:socialdinner/screens/Search/components/search_input_field.dart';
 
 class SearchBar extends StatelessWidget {
@@ -24,7 +25,7 @@ class SearchBar extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: size.height * 0.1),
+                SizedBox(height: size.height * 0.03),
                 SearchInputField(),
                 SizedBox(height: 7),
                 Row(
@@ -56,35 +57,24 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              spreadRadius: 0.5,
-              blurRadius: 3,
-              offset: Offset(0.0, 5.0),
-            ),
-          ],
-          color: Colors.white,
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
         ),
-        child: Container(
-          width: 100,
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.fill,
-            ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            spreadRadius: 0.5,
+            blurRadius: 3,
+            offset: Offset(0.0, 5.0),
           ),
-        ));
+        ],
+        color: kPrimaryMediumColor,
+      ),
+      child: Text(""),
+    );
   }
 }

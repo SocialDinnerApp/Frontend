@@ -9,6 +9,7 @@ import 'package:socialdinner/models/event_item.dart';
 class Event with ChangeNotifier {
   List<EventItem> _activeEvents = [];
   List<EventItem> _myEvents = [];
+  Map _eventDetails = {};
 
   List<EventItem> get activeEvents {
     return _activeEvents;
@@ -16,6 +17,10 @@ class Event with ChangeNotifier {
 
   List<EventItem> get myEvents {
     return _myEvents;
+  }
+
+  Map get eventDetails {
+    return _eventDetails;
   }
 
   Future<void> getActiveEvents() async {
@@ -90,6 +95,76 @@ class Event with ChangeNotifier {
     }
   }
 
+  Future<void> getEventDetails(String eventId) async {
+    http.Response res;
+    final uri =
+        Uri.http(backendurl, '/api/eventParticipation/event_details/$eventId');
+    var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
+
+    print('Getting event details...');
+    res = await http.get(uri, headers: headers);
+    print('Statuscode: ${res.statusCode}');
+    if (res.statusCode == 200) {
+      final extractedData = json.decode(res.body);
+      // print(extractedData);
+
+      var loadedData = new Map();
+      loadedData['eventName'] =
+          extractedData['event_information']['event_name'];
+      loadedData['eventDate'] =
+          extractedData['event_information']['event_date'];
+      loadedData['eventStarterTime'] =
+          extractedData['event_information']['event_starter_time'];
+      loadedData['eventMainTime'] =
+          extractedData['event_information']['event_main_time'];
+      loadedData['eventDessertTime'] =
+          extractedData['event_information']['event_dessert_time'];
+      loadedData['eventDescription'] =
+          extractedData['event_information']['event_description'];
+
+      loadedData['starter_name'] = extractedData['starter']['starter_name'];
+      loadedData['starter_zipcode'] =
+          extractedData['starter']['starter_zipcode'];
+      loadedData['starter_city'] = extractedData['starter']['starter_city'];
+      loadedData['starter_street'] = extractedData['starter']['starter_street'];
+      loadedData['starter_housenumber'] =
+          extractedData['starter']['starter_housenumber'];
+      loadedData['starter_hints'] = extractedData['starter']['starter_hints'];
+      loadedData['starter_floor'] = extractedData['starter']['starter_floor'];
+
+      loadedData['main_name'] = extractedData['main']['main_name'];
+      loadedData['main_zipcode'] = extractedData['main']['main_zipcode'];
+      loadedData['main_city'] = extractedData['main']['main_city'];
+      loadedData['main_street'] = extractedData['main']['main_street'];
+      loadedData['main_housenumber'] =
+          extractedData['main']['main_housenumber'];
+      loadedData['main_hints'] = extractedData['main']['main_hints'];
+      loadedData['main_floor'] = extractedData['main']['main_floor'];
+
+      loadedData['dessert_name'] = extractedData['dessert']['dessert_name'];
+      loadedData['dessert_zipcode'] =
+          extractedData['dessert']['dessert_zipcode'];
+      loadedData['dessert_city'] = extractedData['dessert']['dessert_city'];
+      loadedData['dessert_street'] = extractedData['dessert']['dessert_street'];
+      loadedData['dessert_housenumber'] =
+          extractedData['dessert']['dessert_housenumber'];
+      loadedData['dessert_hints'] = extractedData['dessert']['dessert_hints'];
+      loadedData['dessert_floor'] = extractedData['dessert']['dessert_floor'];
+
+      _eventDetails = loadedData;
+      print(_eventDetails);
+      notifyListeners();
+    }
+  }
+
+  String getEventAddress(String course) {
+    if (_eventDetails.containsValue('Ausstehend')) {
+      return 'Ausstehend';
+    } else {
+      return '${_eventDetails['${course}_street']} ${_eventDetails['${course}_housenumber']}, ${_eventDetails['${course}_floor']}, ${_eventDetails['${course}_zipcode']}, ${_eventDetails['${course}_city']},';
+    }
+  }
+
   Future<bool> participate(
       int zip_code,
       String city,
@@ -108,7 +183,7 @@ class Event with ChangeNotifier {
       'zip_code': "${zip_code}",
       'street': street,
       'housenumber': "${housenumber}",
-      'floor':  "${floor}",
+      'floor': "${floor}",
       'hints': hints,
       'username_partner': teammate,
       'userId': userId,
