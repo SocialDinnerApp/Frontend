@@ -63,7 +63,7 @@ class Body extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return PaymentConfirmation(context);
+                  return PaymentConfirmation(context, eventitem.name, teammate);
                 });
           } else {
             _showErrorDialog(

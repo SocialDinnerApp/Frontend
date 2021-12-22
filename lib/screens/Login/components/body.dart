@@ -35,7 +35,7 @@ class _BodyState extends State<Body> {
           .then(
         (success) {
           if (success) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) {

@@ -5,7 +5,8 @@ import 'package:socialdinner/constants.dart';
 import 'package:socialdinner/screen_routing.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/rounded_button.dart';
 
-Dialog PaymentConfirmation(BuildContext context) {
+Dialog PaymentConfirmation(BuildContext context, String eventName, String eventPartner) {
+
   Size size = MediaQuery.of(context).size;
   return Dialog(
     shape: RoundedRectangleBorder(
@@ -44,7 +45,7 @@ Dialog PaymentConfirmation(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Deine Anmeldung zum Event\n \"Running Dinner Heidelberg\"\nmit deinem Teampartner\n \"ABC\"\n war erfolgreich!",
+                  "Deine Anmeldung zum Event\n \"${eventName}\"\nmit deinem Teampartner\n \"${eventPartner}\"\n war erfolgreich!",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 40),

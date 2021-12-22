@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:socialdinner/components/search_bar.dart';
+import 'package:socialdinner/constants.dart';
 import 'package:socialdinner/screens/MyEvents/components/events.dart';
 
 class Body extends StatelessWidget {
@@ -11,9 +12,14 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Expanded(
-          flex: 20,
-          child: SearchBar(imagePath: 'assets/images/profilepage.png',),
+        Container(
+          color: kPrimaryMediumColor,
+          child: SafeArea(
+            child: Container(
+              height: 120,
+              child: SearchBar(imagePath: 'assets/images/profilepage.png',),
+            ),
+          ),
         ),
         Expanded(
           flex: 80,

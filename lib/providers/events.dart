@@ -95,7 +95,7 @@ class Event with ChangeNotifier {
     }
   }
 
-  Future<void> getEventDetails(String eventId) async {
+  Future<bool> getEventDetails(String eventId) async {
     http.Response res;
     final uri =
         Uri.http(backendurl, '/api/eventParticipation/event_details/$eventId');
@@ -154,7 +154,9 @@ class Event with ChangeNotifier {
       _eventDetails = loadedData;
       print(_eventDetails);
       notifyListeners();
+      return true;
     }
+    return false;
   }
 
   String getEventAddress(String course) {

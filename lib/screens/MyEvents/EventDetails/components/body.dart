@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:socialdinner/constants.dart';
-import 'package:socialdinner/models/event_item.dart';
 import 'package:provider/provider.dart';
 import 'package:socialdinner/providers/events.dart';
 
@@ -18,126 +17,141 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  var isInit = true;
   final String eventId;
   _BodyState({required this.eventId});
 
-  @override
-  void didChangeDependencies() {
-    if (isInit) {
-      Provider.of<Event>(context).getEventDetails(eventId);
-      isInit = false;
-    }
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
+  Future<bool> _future() {
+    return Provider.of<Event>(context, listen: false).getEventDetails(eventId);
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<Event>(
-      builder: (ctx, event, _) => Container(
-        margin: EdgeInsets.only(top: 15),
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
+    return FutureBuilder<bool>(
+      future: _future(),
+      builder: (BuildContext ctx, AsyncSnapshot<bool> snap) {
+        switch (snap.connectionState) {
+          case ConnectionState.waiting:
+            return Text("Lädt...");
+          default:
+            return Consumer<Event>(
+              builder: (ctx, event, _) => Container(
+                margin: EdgeInsets.only(top: 15),
                 width: double.infinity,
-                height: 200,
-                child: Image.asset(
-                  "assets/images/uni_heidelberg.png",
-                  fit: BoxFit.fill,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        height: 200,
+                        child: Image.asset(
+                          "assets/images/uni_heidelberg.png",
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        // height: double.infinity,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        margin: EdgeInsets.only(top: 20),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                event.eventDetails['eventName'],
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.only(top: 20),
+                              child: Text(
+                                'Beschreibung',
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.only(top: 5),
+                              child: Text(
+                                event.eventDetails['eventDescription'],
+                                style: TextStyle(color: Colors.black87),
+                              ),
+                            ),
+                            Divider(
+                                color: Colors.black12,
+                                thickness: 3,
+                                height: 40),
+                            MenuTile(
+                              menuname: 'Vorspeise',
+                              name: event.eventDetails['starter_name'],
+                              address: event.getEventAddress('starter'),
+                              date: event.eventDetails['eventDate'],
+                              time: event.eventDetails['eventStarterTime'],
+                              hint: event.eventDetails['starter_hints'],
+                            ),
+                            Divider(
+                                color: Colors.black12,
+                                thickness: 3,
+                                height: 40),
+                            MenuTile(
+                              menuname: 'Hauptspeise',
+                              name: event.eventDetails['main_name'],
+                              address: event.getEventAddress('main'),
+                              date: event.eventDetails['eventDate'],
+                              time: event.eventDetails['eventMainTime'],
+                              hint: event.eventDetails['main_hints'],
+                            ),
+                            Divider(
+                                color: Colors.black12,
+                                thickness: 3,
+                                height: 40),
+                            MenuTile(
+                              menuname: 'Nachspeise',
+                              name: event.eventDetails['dessert_name'],
+                              address: event.getEventAddress('dessert'),
+                              date: event.eventDetails['eventDate'],
+                              time: event.eventDetails['eventDessertTime'],
+                              hint: event.eventDetails['dessert_hints'],
+                            ),
+                            Divider(
+                                color: Colors.black12,
+                                thickness: 3,
+                                height: 40),
+                            // SizedBox(height: 30),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 30),
+                                child: Text(
+                                  "zurück",
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                // height: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                margin: EdgeInsets.only(top: 20),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        event.eventDetails['eventName'],
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(top: 20),
-                      child: Text(
-                        'Beschreibung',
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(top: 5),
-                      child: Text(
-                        event.eventDetails['eventDescription'],
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                    ),
-                    Divider(color: Colors.black12, thickness: 3, height: 40),
-                    MenuTile(
-                      menuname: 'Vorspeise',
-                      name: event.eventDetails['starter_name'],
-                      address: event.getEventAddress('starter'),
-                      date: event.eventDetails['eventDate'],
-                      time: event.eventDetails['eventStarterTime'],
-                      hint: event.eventDetails['starter_hints'],
-                    ),
-                    Divider(color: Colors.black12, thickness: 3, height: 40),
-                    MenuTile(
-                      menuname: 'Hauptspeise',
-                      name: event.eventDetails['main_name'],
-                      address: event.getEventAddress('main'),
-                      date: event.eventDetails['eventDate'],
-                      time: event.eventDetails['eventMainTime'],
-                      hint: event.eventDetails['main_hints'],
-                    ),
-                    Divider(color: Colors.black12, thickness: 3, height: 40),
-                    MenuTile(
-                      menuname: 'Nachspeise',
-                      name: event.eventDetails['dessert_name'],
-                      address: event.getEventAddress('dessert'),
-                      date: event.eventDetails['eventDate'],
-                      time: event.eventDetails['eventDessertTime'],
-                      hint: event.eventDetails['dessert_hints'],
-                    ),
-                    Divider(color: Colors.black12, thickness: 3, height: 40),
-                    // SizedBox(height: 30),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 30),
-                        child: Text(
-                          "zurück",
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            );
+        }
+      },
     );
   }
 }
