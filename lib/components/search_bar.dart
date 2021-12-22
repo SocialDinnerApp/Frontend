@@ -25,16 +25,17 @@ class SearchBar extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: size.height * 0.03),
+                // SizedBox(height: size.height * 0.01),
                 SearchInputField(),
-                SizedBox(height: 7),
+                SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    SizedBox(width: 15),
                     FilterTile(text: "Stadt"),
-                    SizedBox(width: 5),
+                    SizedBox(width: 10),
                     FilterTile(text: "Zeit"),
-                    SizedBox(width: 5),
+                    SizedBox(width: 10),
                     FilterTile(text: "Preis"),
                   ],
                 ),
@@ -60,10 +61,10 @@ class Background extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
+        // borderRadius: BorderRadius.only(
+        //   bottomLeft: Radius.circular(20),
+        //   bottomRight: Radius.circular(20),
+        // ),
         boxShadow: [
           BoxShadow(
             color: Colors.black26,

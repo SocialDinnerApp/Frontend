@@ -25,12 +25,12 @@ class FilterTile extends StatelessWidget {
           width: 1,
         ),
         boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              spreadRadius: 0.5,
-              blurRadius: 3,
-              offset: Offset(0.0, 5.0),
-            ),
+            // BoxShadow(
+            //   color: Colors.black26,
+            //   spreadRadius: 0.5,
+            //   blurRadius: 3,
+            //   offset: Offset(0.0, 5.0),
+            // ),
           ],
         color: Colors.white,
       ),

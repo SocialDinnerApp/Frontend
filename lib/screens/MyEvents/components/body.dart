@@ -16,13 +16,13 @@ class Body extends StatelessWidget {
           color: kPrimaryMediumColor,
           child: SafeArea(
             child: Container(
-              height: 120,
+              height: 100,
               child: SearchBar(imagePath: 'assets/images/profilepage.png',),
             ),
           ),
         ),
         Expanded(
-          flex: 80,
+          flex: 100,
           // child: Text("test")
           child: Events(),
         ),

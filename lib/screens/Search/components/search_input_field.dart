@@ -9,24 +9,24 @@ class SearchInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(left: 20),
+      // margin: EdgeInsets.only(left: 20),
       padding: EdgeInsets.only(left: 15),
-      width: size.width * 0.7,
+      width: size.width * 0.95,
       height: size.height * 0.05,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         border: Border.all(
           color: Colors.black12,
           width: 1,
         ),
         color: Colors.white,
         boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              spreadRadius: 0.5,
-              blurRadius: 3,
-              offset: Offset(0.0, 5.0),
-            ),
+            // BoxShadow(
+            //   color: Colors.black26,
+            //   spreadRadius: 0.5,
+            //   blurRadius: 3,
+            //   offset: Offset(0.0, 5.0),
+            // ),
           ],
       ),
       child: Row(
