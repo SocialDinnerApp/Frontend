@@ -36,7 +36,7 @@ class _BodyState extends State<Body> {
           default:
             return Consumer<Event>(
               builder: (ctx, event, _) => Container(
-                margin: EdgeInsets.only(top: 15),
+                // margin: EdgeInsets.only(top: 15),
                 width: double.infinity,
                 child: SingleChildScrollView(
                   child: Column(
