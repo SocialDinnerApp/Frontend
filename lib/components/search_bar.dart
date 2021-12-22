@@ -31,12 +31,12 @@ class SearchBar extends StatelessWidget {
                 Row(
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    SizedBox(width: 20),
+                    FilterTile(text: "Stadt", width: 60),
                     SizedBox(width: 15),
-                    FilterTile(text: "Stadt"),
-                    SizedBox(width: 10),
-                    FilterTile(text: "Zeit"),
-                    SizedBox(width: 10),
-                    FilterTile(text: "Preis"),
+                    FilterTile(text: "Zeit", width: 50),
+                    SizedBox(width: 15),
+                    FilterTile(text: "Preis", width: 60),
                   ],
                 ),
               ],
