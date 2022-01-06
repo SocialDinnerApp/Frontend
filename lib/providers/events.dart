@@ -25,7 +25,7 @@ class Event with ChangeNotifier {
 
   Future<void> getActiveEvents() async {
     http.Response res;
-    final uri = Uri.http(backendurl, '/api/event/getActiveEvents');
+    final uri = Uri.https(backendurl, '/api/event/getActiveEvents');
     var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
 
     print('Geting Active events...');
@@ -61,7 +61,7 @@ class Event with ChangeNotifier {
 
   Future<void> getMyEvents() async {
     http.Response res;
-    final uri = Uri.http(backendurl, '/api/participant/myEvents');
+    final uri = Uri.https(backendurl, '/api/participant/myEvents');
     var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
 
     print('Geting my events...');
@@ -98,7 +98,7 @@ class Event with ChangeNotifier {
   Future<bool> getEventDetails(String eventId) async {
     http.Response res;
     final uri =
-        Uri.http(backendurl, '/api/eventParticipation/event_details/$eventId');
+        Uri.https(backendurl, '/api/eventParticipation/event_details/$eventId');
     var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
 
     print('Getting event details...');
@@ -191,7 +191,7 @@ class Event with ChangeNotifier {
       'userId': userId,
       'eventId': eventId,
     };
-    final uri = Uri.http(backendurl, '/api/participation', queryParameters);
+    final uri = Uri.https(backendurl, '/api/participation', queryParameters);
     var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
 
     res = await http.post(uri, headers: headers);

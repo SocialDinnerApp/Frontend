@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/valkey.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
@@ -46,8 +47,9 @@ class Auth with ChangeNotifier {
       'email': email,
       'username': username,
       'password': password,
+      'val_key': val_key,
     };
-    final uri = Uri.http(
+    final uri = Uri.https(
       backendurl,
       '/api/participant',
       queryParameters,
@@ -71,7 +73,7 @@ class Auth with ChangeNotifier {
       'username': username,
       'password': password,
     };
-    final uri = Uri.http(backendurl, '/api/participant/login', queryParameters);
+    final uri = Uri.https(backendurl, '/api/participant/login', queryParameters);
 
     res = await http.post(uri);
 
