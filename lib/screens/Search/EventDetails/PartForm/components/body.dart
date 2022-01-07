@@ -3,14 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:socialdinner/components/rounded_button.dart';
 import 'package:socialdinner/constants.dart';
-import 'package:socialdinner/models/cooking_location.dart';
 import 'package:socialdinner/models/event_item.dart';
 import 'package:socialdinner/providers/events.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/pay_confirmation.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/rounded_input_field.dart';
 import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   final EventItem eventitem;
   const Body({
     Key? key,
@@ -18,34 +17,43 @@ class Body extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    int zip_code = 0;
-    String city = '';
-    String street = '';
-    int housenumber = 0;
-    int floor = 0;
-    String hints = '';
-    String teammate = '';
+  State<Body> createState() => _BodyState();
+}
 
-    void _showErrorDialog(String message) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('Es ist ein Fehler aufgetreten!'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            ),
-          ],
-        ),
-      );
-    }
+class _BodyState extends State<Body> {
+  int zip_code = 0;
+  String city = '';
+  String street = '';
+  int housenumber = 0;
+  int floor = 0;
+  String hints = '';
+  String teammate_name = '';
 
-    Future<void> _submit() async {
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Es ist ein Fehler aufgetreten!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    if (zip_code != 0 &&
+        city != null &&
+        street != null &&
+        housenumber != 0 &&
+        floor != 0 &&
+        teammate_name != null) {
       await Provider.of<Event>(context, listen: false)
           .participate(
         zip_code,
@@ -54,8 +62,8 @@ class Body extends StatelessWidget {
         housenumber,
         floor,
         hints,
-        teammate,
-        eventitem.eventId,
+        teammate_name,
+        widget.eventitem.eventId,
       )
           .then(
         (success) {
@@ -63,16 +71,20 @@ class Body extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return PaymentConfirmation(context, eventitem.name, teammate);
+                  return PaymentConfirmation(
+                      context, widget.eventitem.name, teammate_name);
                 });
           } else {
             _showErrorDialog(
-                'Erstellung ist fehlgeschlagen. Versuchen Sie es erneut...');
+                'Eventteilnahme ist fehlgeschlagen. Versuchen Sie es erneut...');
           }
         },
       );
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.all(30),
@@ -90,7 +102,7 @@ class Body extends StatelessWidget {
               width: double.infinity,
               hinttext: "Username des Partners",
               onChanged: (val) {
-                teammate = val;
+                teammate_name = val;
               },
             ),
             SizedBox(height: 30),
