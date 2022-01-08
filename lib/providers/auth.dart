@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socialdinner/constants.dart';
+import 'package:socialdinner/helpers/get_auth_token.dart';
 import 'package:socialdinner/valkey.dart';
 
 class Auth with ChangeNotifier {
@@ -148,5 +149,85 @@ class Auth with ChangeNotifier {
     }
     final secToExp = _expiryDate!.difference(DateTime.now()).inSeconds;
     _authTimer = Timer(Duration(seconds: secToExp), logout);
+  }
+
+  Future<bool> checkEmailExistence(String email) async {
+    http.Response res;
+
+    final queryParameters = {
+      'email': email,
+      'val_key': val_key,
+    };
+    final uri = Uri.https(backendurl, '/api/emailexistence', queryParameters);
+    var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
+
+    res = await http.get(uri, headers: headers);
+    print('Statuscode: ${res.statusCode}');
+    if (res.statusCode == 200) {
+      final extractedData = json.decode(res.body);
+      print(extractedData);
+
+      if (extractedData['exists'] == 'true') {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> checkUsernameExistence(String username) async {
+    http.Response res;
+
+    final queryParameters = {
+      'username': username,
+      'val_key': val_key,
+    };
+    final uri = Uri.https(backendurl, '/api/usernameexistence', queryParameters);
+    var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
+
+    res = await http.get(uri, headers: headers);
+    print('Statuscode: ${res.statusCode}');
+    if (res.statusCode == 200) {
+      final extractedData = json.decode(res.body);
+      print(extractedData);
+
+      if (extractedData['exists'] == 'true') {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
+
+  Future<List<String>> getMatchingUsernames(String username, String eventId) async {
+    http.Response res;
+    List<String> matchingUsernames = [];
+
+    final queryParameters = {
+      'username': username,
+      'val_key': val_key,
+      'eventId': eventId,
+    };
+    final uri = Uri.https(backendurl, '/api/matchingusernames', queryParameters);
+    var headers = {'Authorization': 'Bearer ${await getAuthToken()}'};
+
+    res = await http.get(uri, headers: headers);
+    print('Statuscode: ${res.statusCode}');
+    if (res.statusCode == 200) {
+      final extractedData = json.decode(res.body);
+      // print(extractedData);
+      // print(extractedData['usernames']);
+      // print('Before: $matchingUsernames');
+      extractedData['usernames'].forEach((element) {
+        matchingUsernames.add(element);
+      });
+      // print('After: ');
+    }
+    // print(matchingUsernames);
+    if (matchingUsernames.length > 10) {
+      return matchingUsernames.sublist(0, 10);
+    } else {
+      return matchingUsernames;
+    }
   }
 }

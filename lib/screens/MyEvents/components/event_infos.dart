@@ -20,7 +20,7 @@ class EventInfos extends StatelessWidget {
     return Column(
       children: <Widget>[
         Expanded(
-          flex: 20,
+          flex: 25,
           child: EventName(eventName: eventName),
         ),
         Expanded(
@@ -31,7 +31,7 @@ class EventInfos extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 40,
+          flex: 35,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -40,8 +40,8 @@ class EventInfos extends StatelessWidget {
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
-                  width: 270,
-                  height: 60,
+                  width: 250,
+                  height: 40,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black12, width: 1),
                     borderRadius: BorderRadius.circular(10),

@@ -25,11 +25,11 @@ class EventInfos extends StatelessWidget {
           child: EventName(eventName: eventName),
         ),
         Expanded(
-          flex: 30,
+          flex: 20,
           child: EventDescription(eventDesc: eventDesc),
         ),
         Expanded(
-          flex: 50,
+          flex: 60,
           child: EventHighlights(
             eventLoc: eventLoc,
             eventDate: eventDate,

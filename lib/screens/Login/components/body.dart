@@ -11,6 +11,7 @@ import 'package:socialdinner/screen_routing.dart';
 import 'package:socialdinner/screens/Login/components/background.dart';
 import 'package:socialdinner/screens/Signup/signup_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -25,8 +26,16 @@ class _BodyState extends State<Body> {
     'password': '',
   };
 
+  bool exPassword = false;
+  bool exUsername = false;
+
+  bool isLoading = false;
+
   Future<void> _submit() async {
     if (_authData['username'] != null && _authData['password'] != null) {
+      setState(() {
+        isLoading = true;
+      });
       await Provider.of<Auth>(context, listen: false)
           .login(
         _authData['username']!,
@@ -34,6 +43,9 @@ class _BodyState extends State<Body> {
       )
           .then(
         (success) {
+          setState(() {
+            isLoading = false;
+          });
           if (success) {
             Navigator.pushReplacement(
               context,
@@ -96,17 +108,41 @@ class _BodyState extends State<Body> {
             icon: Icons.person,
             onChanged: (value) {
               _authData['username'] = value;
+              if (value.isNotEmpty) {
+                setState(() {
+                  exUsername = true;
+                });
+              } else {
+                setState(() {
+                  exUsername = false;
+                });
+              }
             },
           ),
           RoundedPasswordField(
             onChanged: (value) {
               _authData['password'] = value;
+              if (value.isNotEmpty) {
+                setState(() {
+                  exPassword = true;
+                });
+              } else {
+                setState(() {
+                  exPassword = false;
+                });
+              }
             },
           ),
-          RoundedButton(
-            text: 'ANMELDEN',
-            press: _submit,
-          ),
+          isLoading
+              ? SpinKitWave(
+                  color: kPrimaryColor,
+                  size: size.height * 0.03,
+                )
+              : RoundedButton(
+                  text: 'ANMELDEN',
+                  press: _submit,
+                  disabled: exUsername && exPassword ? false : true,
+                ),
           SizedBox(height: size.height * 0.03),
           AlreadyHaveAnAccountCheck(
             press: () {

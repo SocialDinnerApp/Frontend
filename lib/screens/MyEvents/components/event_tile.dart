@@ -17,13 +17,13 @@ class EventTile extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Expanded(
-            flex: 45,
+            flex: 50,
             child: EventImage(
               imagePath: 'assets/images/uni_heidelberg.png',
             ),
           ),
           Expanded(
-            flex: 55,
+            flex: 50,
             child: EventInfos(
               eventName: eventItem.name,
               eventDesc: eventItem.description,
@@ -89,7 +89,7 @@ class BackgroundTile extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        height: 450,
+        height: 350,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(

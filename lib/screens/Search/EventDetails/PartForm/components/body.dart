@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:socialdinner/components/rounded_button.dart';
 import 'package:socialdinner/constants.dart';
 import 'package:socialdinner/models/event_item.dart';
 import 'package:socialdinner/providers/events.dart';
+import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/autocompleteinput.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/pay_confirmation.dart';
 import 'package:socialdinner/screens/Search/EventDetails/PartForm/components/rounded_input_field.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +30,13 @@ class _BodyState extends State<Body> {
   int floor = 0;
   String hints = '';
   String teammate_name = '';
+
+  bool exZipcode = false;
+  bool exCity = false;
+  bool exStreet = false;
+  bool exHousenumber = false;
+  bool exFloor = false;
+  bool exTeammatename = true;
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -98,13 +107,25 @@ class _BodyState extends State<Body> {
             ),
             Divider(color: Colors.black12, thickness: 2),
             SizedBox(height: 5),
-            RoundedInputField(
-              width: double.infinity,
-              hinttext: "Username des Partners",
-              onChanged: (val) {
-                teammate_name = val;
+            // RoundedInputField(
+            //   width: double.infinity,
+            //   hinttext: "Username des Partners",
+            //   onChanged: (val) {
+            //     teammate_name = val;
+            //   },
+            // ),
+            // Start
+            AutoCompleteInput(
+              eventId: widget.eventitem.eventId,
+              hinttext: 'Username der Partners',
+              validator: (val) {
+                print('Wert des Dropdowns: $val');
+                final value = "$val";
+                teammate_name = value;
+                exTeammatename = value.isNotEmpty ? true : false;
               },
             ),
+            // End
             SizedBox(height: 30),
             Text(
               "Adresse eures Gästeempfangs",
@@ -112,12 +133,15 @@ class _BodyState extends State<Body> {
             ),
             Divider(color: Colors.black12, thickness: 2),
             SizedBox(height: 10),
-            TextwPad(text: "Straße"),
+            TextwPad(text: "* Straße"),
             RoundedInputField(
               width: double.infinity,
               hinttext: "Straße",
               onChanged: (val) {
                 street = val;
+                setState(() {
+                  exStreet = val.isNotEmpty ? true : false;
+                });
               },
             ),
             SizedBox(height: 10),
@@ -128,12 +152,15 @@ class _BodyState extends State<Body> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextwPad(text: "Hausnummer"),
+                      TextwPad(text: "* Hausnummer"),
                       RoundedInputField(
                         width: double.infinity,
                         hinttext: "Hausnummer",
                         onChanged: (val) {
                           housenumber = int.parse(val);
+                          setState(() {
+                            exHousenumber = val.isNotEmpty ? true : false;
+                          });
                         },
                       ),
                     ],
@@ -145,12 +172,15 @@ class _BodyState extends State<Body> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextwPad(text: "Etage"),
+                      TextwPad(text: "* Etage"),
                       RoundedInputField(
                         width: double.infinity,
                         hinttext: "Etage",
                         onChanged: (val) {
                           floor = int.parse(val);
+                          setState(() {
+                            exFloor = val.isNotEmpty ? true : false;
+                          });
                         },
                       ),
                     ],
@@ -166,12 +196,15 @@ class _BodyState extends State<Body> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextwPad(text: "PLZ"),
+                      TextwPad(text: "* PLZ"),
                       RoundedInputField(
                         width: double.infinity,
                         hinttext: "PLZ",
                         onChanged: (val) {
                           zip_code = int.parse(val);
+                          setState(() {
+                            exZipcode = val.isNotEmpty ? true : false;
+                          });
                         },
                       ),
                     ],
@@ -183,12 +216,15 @@ class _BodyState extends State<Body> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextwPad(text: "Ort"),
+                      TextwPad(text: "* Stadt"),
                       RoundedInputField(
                         width: double.infinity,
-                        hinttext: "Ort",
+                        hinttext: "Stadt",
                         onChanged: (val) {
                           city = val;
+                          setState(() {
+                            exCity = val.isNotEmpty ? true : false;
+                          });
                         },
                       ),
                     ],
@@ -222,6 +258,14 @@ class _BodyState extends State<Body> {
                   RoundedButton(
                     text: "BESTÄTIGEN",
                     press: _submit,
+                    disabled: exTeammatename &&
+                            exCity &&
+                            exFloor &&
+                            exHousenumber &&
+                            exStreet &&
+                            exZipcode
+                        ? false
+                        : true,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -242,6 +286,25 @@ class _BodyState extends State<Body> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TextwPad extends StatelessWidget {
+  final String text;
+  const TextwPad({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, bottom: 3),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 13),
       ),
     );
   }
@@ -277,25 +340,6 @@ class PaymentMethod extends StatelessWidget {
           Text("Zahlungsmethode"),
           Icon(Icons.expand_more),
         ],
-      ),
-    );
-  }
-}
-
-class TextwPad extends StatelessWidget {
-  final String text;
-  const TextwPad({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, bottom: 3),
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 13),
       ),
     );
   }

@@ -10,6 +10,7 @@ import 'package:socialdinner/providers/auth.dart';
 import 'package:socialdinner/screens/Login/login_screen.dart';
 import 'package:socialdinner/screens/Signup/components/background.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -24,47 +25,128 @@ class _BodyState extends State<Body> {
     'password': '',
   };
 
+  String emailHint = 'Bitte eine gültige Email angeben!';
+  String passwordHint = 'Das Passwort muss mindestens 7 Zeichen enthalten!';
+  String usernameHint = 'Der Username muss mindestens 3 Zeichen enthalten';
+
+  bool isEmailValid = false;
+  bool isPasswordValid = false;
+  bool isUsernameValid = false;
+
+  bool isLoading = false;
+
   Future<void> _submit() async {
-    if (_authData['email'] != null && _authData['username'] != null && _authData['password'] != null) {
+    if (_authData['email'] != null &&
+        _authData['username'] != null &&
+        _authData['password'] != null) {
+      setState(() {
+        isLoading = true;
+      });
       await Provider.of<Auth>(context, listen: false)
           .signup(
-            _authData['email']!,
-            _authData['username']!,
-            _authData['password']!,
-          )
+        _authData['email']!,
+        _authData['username']!,
+        _authData['password']!,
+      )
           .then(
-            (value) {
-              if (value)
-                {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return LoginScreen();
-                      },
-                    ),
-                  );
-                } else {
-                  _showErrorDialog('Registrierung ist fehlgeschlagen. Versuchen Sie es erneut...');
-                }
-            },
-          );
+        (value) {
+          setState(() {
+            isLoading = false;
+          });
+          if (value) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LoginScreen();
+                },
+              ),
+            );
+          } else {
+            _showErrorDialog(
+                'Registrierung ist fehlgeschlagen. Versuchen Sie es erneut...');
+          }
+        },
+      );
     }
   }
 
   void _showErrorDialog(String message) {
-    showDialog(context: context, builder: (ctx) => AlertDialog(
-      title: Text('Es ist ein Fehler aufgetreten!'),
-      content: Text(message),
-      actions: <Widget>[
-        TextButton(
-          child: Text('Okay'),
-          onPressed: () {
-            Navigator.of(ctx).pop();
-          },
-        ),
-      ],
-    ));
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text('Es ist ein Fehler aufgetreten!'),
+              content: Text(message),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Okay'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                ),
+              ],
+            ));
+  }
+
+  void _isPasswordValid(String password) {
+    if (password.length >= 7) {
+      setState(() {
+        passwordHint = '';
+        isPasswordValid = true;
+      });
+    } else {
+      setState(() {
+        passwordHint = 'Das Passwort muss mindestens 7 Zeichen enthalten!';
+        isPasswordValid = false;
+      });
+    }
+  }
+
+  void _isEmailValid(String email) async {
+    if (email.contains('@') && email.contains('.') && email.length > 5) {
+      final bool emailexists = await Provider.of<Auth>(context, listen: false)
+          .checkEmailExistence(email);
+      if (emailexists) {
+        setState(() {
+          emailHint = 'Diese Email ist bereits vergeben!';
+          isEmailValid = false;
+        });
+      } else {
+        setState(() {
+          emailHint = '';
+          isEmailValid = true;
+        });
+      }
+    } else {
+      setState(() {
+        emailHint = 'Bitte eine gültige Email angeben!';
+        isEmailValid = false;
+      });
+    }
+  }
+
+  void _isUsernameValid(String username) async {
+    if (username.length > 2) {
+      final bool usernameexists =
+          await Provider.of<Auth>(context, listen: false)
+              .checkUsernameExistence(username);
+      if (usernameexists) {
+        setState(() {
+          usernameHint = 'Dieser Username ist beretis vergeben!';
+          isUsernameValid = false;
+        });
+      } else {
+        setState(() {
+          usernameHint = '';
+          isUsernameValid = true;
+        });
+      }
+    } else {
+      setState(() {
+        usernameHint = 'Der Username muss mindestens 3 Zeichen enthalten';
+        isUsernameValid = false;
+      });
+    }
   }
 
   @override
@@ -82,34 +164,61 @@ class _BodyState extends State<Body> {
               color: kPrimaryColor,
             ),
           ),
-          SizedBox(height: size.height * 0.03),
+          SizedBox(height: size.height * 0.02),
           Image.asset(
             "assets/images/Registrierung.png",
-            width: size.width * 0.9,
+            width: size.width * 0.8,
           ),
+          SizedBox(height: size.height * 0.02),
           RoundedInputField(
             hinttext: "Deine Email",
-            icon: Icons.person,
+            icon: Icons.mail,
             onChanged: (value) {
               _authData['email'] = value;
+              _isEmailValid(value);
             },
+          ),
+          Container(
+            width: size.width * 0.75,
+            alignment: Alignment.centerLeft,
+            child: Text(emailHint, style: TextStyle(color: kPrimaryColor)),
           ),
           RoundedInputField(
             hinttext: "Dein Username",
             icon: Icons.person,
             onChanged: (value) {
               _authData['username'] = value;
+              _isUsernameValid(value);
             },
+          ),
+          Container(
+            width: size.width * 0.75,
+            alignment: Alignment.centerLeft,
+            child: Text(usernameHint, style: TextStyle(color: kPrimaryColor)),
           ),
           RoundedPasswordField(
             onChanged: (value) {
               _authData['password'] = value;
+              _isPasswordValid(value);
             },
           ),
-          RoundedButton(
-            text: "REGISTRIEREN",
-            press: _submit,
+          Container(
+            width: size.width * 0.75,
+            alignment: Alignment.centerLeft,
+            child: Text(passwordHint, style: TextStyle(color: kPrimaryColor)),
           ),
+          isLoading
+              ? SpinKitWave(
+                  color: kPrimaryColor,
+                  size: size.height * 0.03,
+                )
+              : RoundedButton(
+                  text: "REGISTRIEREN",
+                  press: _submit,
+                  disabled: isEmailValid && isPasswordValid && isUsernameValid
+                      ? false
+                      : true,
+                ),
           SizedBox(height: size.height * 0.03),
           AlreadyHaveAnAccountCheck(
             login: false,
