@@ -46,9 +46,9 @@ class _EventsState extends State<Events> {
               // shrinkWrap: true,
               itemCount: event.activeEvents.length,
               itemBuilder: (BuildContext ctx, int i) {
-                return EventTile(
+                return event.activeEvents[i].name.toLowerCase().contains(event.searchPattern1.toLowerCase()) ? EventTile(
                   eventitem: event.activeEvents[i],
-                );
+                ) : SizedBox();
               }),
         ),
       ),

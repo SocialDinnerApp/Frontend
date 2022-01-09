@@ -39,7 +39,7 @@ class SearchInputField extends StatelessWidget {
               margin: EdgeInsets.only(top: 19, left: 15),
               child: TextField(
                 onChanged: (val) {
-                  Provider.of<Event>(context, listen: false).setSearchPattern1(val);
+                  Provider.of<Event>(context, listen: false).setSearchPattern2(val);
                   print('Search-Pattern: $val');
                 },
                 decoration: InputDecoration(

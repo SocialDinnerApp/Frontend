@@ -10,6 +10,8 @@ class Event with ChangeNotifier {
   List<EventItem> _activeEvents = [];
   List<EventItem> _myEvents = [];
   Map _eventDetails = {};
+  String searchPattern1 = '';
+  String searchPattern2 = '';
 
   List<EventItem> get activeEvents {
     return _activeEvents;
@@ -21,6 +23,16 @@ class Event with ChangeNotifier {
 
   Map get eventDetails {
     return _eventDetails;
+  }
+
+  void setSearchPattern1(String pattern) {
+    searchPattern1 = pattern;
+    notifyListeners();
+  }
+
+  void setSearchPattern2(String pattern) {
+    searchPattern2 = pattern;
+    notifyListeners();
   }
 
   Future<void> getActiveEvents() async {

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:socialdinner/constants.dart';
 import 'package:socialdinner/screens/Search/components/events.dart';
-import 'package:socialdinner/components/search_bar.dart';
+import 'package:socialdinner/screens/Search/components/search_bar.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
