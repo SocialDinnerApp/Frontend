@@ -32,95 +32,97 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Background(),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.email, color: kPrimaryMediumColor, size: 30),
-                  SizedBox(width: 10),
-                  Text(
-                    "Email",
-                    style: TextStyle(fontSize: 18, color: Colors.black87),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  SizedBox(width: 40),
-                  Text(
-                    email,
-                    style: TextStyle(fontSize: 18, color: Colors.black45),
-                  ),
-                ],
-              ),
-              Divider(height: 50, color: Colors.black26, thickness: 1),
-              Row(
-                children: [
-                  Icon(Icons.person, color: kPrimaryMediumColor, size: 30),
-                  SizedBox(width: 10),
-                  Text(
-                    "Username",
-                    style: TextStyle(fontSize: 18, color: Colors.black87),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  SizedBox(width: 40),
-                  Text(
-                    username,
-                    style: TextStyle(fontSize: 18, color: Colors.black45),
-                  ),
-                ],
-              ),
-              Divider(height: 50, color: Colors.black26, thickness: 1),
-              Row(
-                children: [
-                  Icon(Icons.lock, color: kPrimaryMediumColor, size: 30),
-                  SizedBox(width: 10),
-                  Text(
-                    "Password",
-                    style: TextStyle(fontSize: 18, color: Colors.black87),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  SizedBox(width: 40),
-                  Text(
-                    "*************",
-                    style: TextStyle(fontSize: 18, color: Colors.black45),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RoundedButton(
-                      text: 'ABMELDEN',
-                      press: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
-                        Provider.of<Auth>(context, listen: false).logout();
-                      }),
-                ],
-              ),
-            ],
-          ),
-        )
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Background(),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.email, color: kPrimaryMediumColor, size: 30),
+                    SizedBox(width: 10),
+                    Text(
+                      "Email",
+                      style: TextStyle(fontSize: 18, color: Colors.black87),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(width: 40),
+                    Text(
+                      email,
+                      style: TextStyle(fontSize: 18, color: Colors.black45),
+                    ),
+                  ],
+                ),
+                Divider(height: 50, color: Colors.black26, thickness: 1),
+                Row(
+                  children: [
+                    Icon(Icons.person, color: kPrimaryMediumColor, size: 30),
+                    SizedBox(width: 10),
+                    Text(
+                      "Username",
+                      style: TextStyle(fontSize: 18, color: Colors.black87),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(width: 40),
+                    Text(
+                      username,
+                      style: TextStyle(fontSize: 18, color: Colors.black45),
+                    ),
+                  ],
+                ),
+                Divider(height: 50, color: Colors.black26, thickness: 1),
+                Row(
+                  children: [
+                    Icon(Icons.lock, color: kPrimaryMediumColor, size: 30),
+                    SizedBox(width: 10),
+                    Text(
+                      "Password",
+                      style: TextStyle(fontSize: 18, color: Colors.black87),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(width: 40),
+                    Text(
+                      "*************",
+                      style: TextStyle(fontSize: 18, color: Colors.black45),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RoundedButton(
+                        text: 'ABMELDEN',
+                        press: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
+                          Provider.of<Auth>(context, listen: false).logout();
+                        }),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

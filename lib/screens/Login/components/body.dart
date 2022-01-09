@@ -86,77 +86,79 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Anmelden',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: kPrimaryColor,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Anmelden',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+                color: kPrimaryColor,
+              ),
             ),
-          ),
-          SizedBox(height: size.height * 0.06),
-          Image.asset(
-            'assets/images/grafik 2.png',
-            width: size.width * 0.9,
-          ),
-          SizedBox(height: size.height * 0.03),
-          RoundedInputField(
-            hinttext: 'Username',
-            icon: Icons.person,
-            onChanged: (value) {
-              _authData['username'] = value;
-              if (value.isNotEmpty) {
-                setState(() {
-                  exUsername = true;
-                });
-              } else {
-                setState(() {
-                  exUsername = false;
-                });
-              }
-            },
-          ),
-          RoundedPasswordField(
-            onChanged: (value) {
-              _authData['password'] = value;
-              if (value.isNotEmpty) {
-                setState(() {
-                  exPassword = true;
-                });
-              } else {
-                setState(() {
-                  exPassword = false;
-                });
-              }
-            },
-          ),
-          isLoading
-              ? SpinKitWave(
-                  color: kPrimaryColor,
-                  size: size.height * 0.03,
-                )
-              : RoundedButton(
-                  text: 'ANMELDEN',
-                  press: _submit,
-                  disabled: exUsername && exPassword ? false : true,
-                ),
-          SizedBox(height: size.height * 0.03),
-          AlreadyHaveAnAccountCheck(
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SignupScreen();
-                  },
-                ),
-              );
-            },
-          ),
-        ],
+            SizedBox(height: size.height * 0.06),
+            Image.asset(
+              'assets/images/grafik 2.png',
+              width: size.width * 0.9,
+            ),
+            SizedBox(height: size.height * 0.03),
+            RoundedInputField(
+              hinttext: 'Username',
+              icon: Icons.person,
+              onChanged: (value) {
+                _authData['username'] = value;
+                if (value.isNotEmpty) {
+                  setState(() {
+                    exUsername = true;
+                  });
+                } else {
+                  setState(() {
+                    exUsername = false;
+                  });
+                }
+              },
+            ),
+            RoundedPasswordField(
+              onChanged: (value) {
+                _authData['password'] = value;
+                if (value.isNotEmpty) {
+                  setState(() {
+                    exPassword = true;
+                  });
+                } else {
+                  setState(() {
+                    exPassword = false;
+                  });
+                }
+              },
+            ),
+            isLoading
+                ? SpinKitWave(
+                    color: kPrimaryColor,
+                    size: size.height * 0.03,
+                  )
+                : RoundedButton(
+                    text: 'ANMELDEN',
+                    press: _submit,
+                    disabled: exUsername && exPassword ? false : true,
+                  ),
+            SizedBox(height: size.height * 0.03),
+            AlreadyHaveAnAccountCheck(
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SignupScreen();
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -153,87 +153,89 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Registrieren',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: kPrimaryColor,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Registrieren',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+                color: kPrimaryColor,
+              ),
             ),
-          ),
-          SizedBox(height: size.height * 0.02),
-          Image.asset(
-            "assets/images/Registrierung.png",
-            width: size.width * 0.8,
-          ),
-          SizedBox(height: size.height * 0.02),
-          RoundedInputField(
-            hinttext: "Deine Email",
-            icon: Icons.mail,
-            onChanged: (value) {
-              _authData['email'] = value;
-              _isEmailValid(value);
-            },
-          ),
-          Container(
-            width: size.width * 0.75,
-            alignment: Alignment.centerLeft,
-            child: Text(emailHint, style: TextStyle(color: kPrimaryColor)),
-          ),
-          RoundedInputField(
-            hinttext: "Dein Username",
-            icon: Icons.person,
-            onChanged: (value) {
-              _authData['username'] = value;
-              _isUsernameValid(value);
-            },
-          ),
-          Container(
-            width: size.width * 0.75,
-            alignment: Alignment.centerLeft,
-            child: Text(usernameHint, style: TextStyle(color: kPrimaryColor)),
-          ),
-          RoundedPasswordField(
-            onChanged: (value) {
-              _authData['password'] = value;
-              _isPasswordValid(value);
-            },
-          ),
-          Container(
-            width: size.width * 0.75,
-            alignment: Alignment.centerLeft,
-            child: Text(passwordHint, style: TextStyle(color: kPrimaryColor)),
-          ),
-          isLoading
-              ? SpinKitWave(
-                  color: kPrimaryColor,
-                  size: size.height * 0.03,
-                )
-              : RoundedButton(
-                  text: "REGISTRIEREN",
-                  press: _submit,
-                  disabled: isEmailValid && isPasswordValid && isUsernameValid
-                      ? false
-                      : true,
-                ),
-          SizedBox(height: size.height * 0.03),
-          AlreadyHaveAnAccountCheck(
-            login: false,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginScreen();
-                  },
-                ),
-              );
-            },
-          ),
-        ],
+            SizedBox(height: size.height * 0.02),
+            Image.asset(
+              "assets/images/Registrierung.png",
+              width: size.width * 0.8,
+            ),
+            SizedBox(height: size.height * 0.02),
+            RoundedInputField(
+              hinttext: "Deine Email",
+              icon: Icons.mail,
+              onChanged: (value) {
+                _authData['email'] = value;
+                _isEmailValid(value);
+              },
+            ),
+            Container(
+              width: size.width * 0.75,
+              alignment: Alignment.centerLeft,
+              child: Text(emailHint, style: TextStyle(color: kPrimaryColor)),
+            ),
+            RoundedInputField(
+              hinttext: "Dein Username",
+              icon: Icons.person,
+              onChanged: (value) {
+                _authData['username'] = value;
+                _isUsernameValid(value);
+              },
+            ),
+            Container(
+              width: size.width * 0.75,
+              alignment: Alignment.centerLeft,
+              child: Text(usernameHint, style: TextStyle(color: kPrimaryColor)),
+            ),
+            RoundedPasswordField(
+              onChanged: (value) {
+                _authData['password'] = value;
+                _isPasswordValid(value);
+              },
+            ),
+            Container(
+              width: size.width * 0.75,
+              alignment: Alignment.centerLeft,
+              child: Text(passwordHint, style: TextStyle(color: kPrimaryColor)),
+            ),
+            isLoading
+                ? SpinKitWave(
+                    color: kPrimaryColor,
+                    size: size.height * 0.03,
+                  )
+                : RoundedButton(
+                    text: "REGISTRIEREN",
+                    press: _submit,
+                    disabled: isEmailValid && isPasswordValid && isUsernameValid
+                        ? false
+                        : true,
+                  ),
+            SizedBox(height: size.height * 0.03),
+            AlreadyHaveAnAccountCheck(
+              login: false,
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return LoginScreen();
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

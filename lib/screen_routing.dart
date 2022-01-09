@@ -30,7 +30,7 @@ class _ScreenRoutingState extends State<ScreenRouting> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Suche"),
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: "MyEvents"),
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: "My Events"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profil"),
         ],
         currentIndex: _selectedIndex,
