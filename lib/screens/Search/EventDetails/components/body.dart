@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
               width: double.infinity,
               height: 200,
               child: Image.asset(
-                "assets/images/uni_heidelberg.png",
+                "assets/images/running_dinner.jpeg",
                 fit: BoxFit.fill,
               ),
             ),

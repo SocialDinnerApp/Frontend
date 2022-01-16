@@ -22,7 +22,7 @@ class EventTile extends StatelessWidget {
           Expanded(
             flex: 50,
             child: EventImage(
-              imagePath: 'assets/images/uni_heidelberg.png',
+              imagePath: 'assets/images/running_dinner.jpeg',
             ),
           ),
           Expanded(
